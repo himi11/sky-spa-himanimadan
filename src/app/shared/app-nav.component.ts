@@ -20,10 +20,6 @@ export class AppNavComponent {
     {
       titleKey: 'app_nav_users',
       path: '/users'
-    },
-    {
-      titleKey: 'app_nav_demo',
-      path: '/demo'
     }
   ];
 }

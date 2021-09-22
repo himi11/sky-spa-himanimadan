@@ -25,7 +25,7 @@
     </div>
 
     <div *ngIf="emailControl.errors.skyEmail && emailControl.dirty" class="sky-error-label">
-      {{'valid_email_message | skyAppResources'}}
+      {{'valid_email_message' | skyAppResources}}
     </div>
 
   </ng-container>
@@ -58,6 +58,6 @@
 </sky-datepicker>
 </div>
 
-<button class="sky-btn sky-btn-primary" type ="submit">{{submit | skyAppResources }}</button>
+<button class="sky-btn sky-btn-primary" type ="submit">{{'submit' | skyAppResources }}</button>
 </form>
 </ng-container>
