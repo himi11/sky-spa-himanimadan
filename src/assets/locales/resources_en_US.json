@@ -1,0 +1,66 @@
+{
+  "example_string": {
+    "message": "This is an example string",
+    "_description": "The _description property gives context to the translator as to how the string is used in the product"
+  },
+  "app_nav_about": {
+    "message": "About",
+    "_description": "The text for the About top-level navigation item"
+  },
+  "app_nav_home": {
+    "message": "Home",
+    "_description": "The text for the Home top-level navigation item"
+  },
+  "home_title": {
+    "message": "SKY UX Template",
+    "_description": "Title for the home component"
+  },
+  "app_nav_users": {
+    "message": "Users",
+    "_description": "Add a user in the grid."
+  },
+
+  "first_name": {
+    "message": "First Name",
+    "Description": "First Name."
+  },
+  "last_name": {
+    "message": "Last Name",
+    "Description": "Last Name."
+  },
+  "phone_number": {
+    "message": "Phone Number",
+    "Description": "Phone Number."
+  },
+  "email_id": {
+    "message": "Email Id",
+    "Description": "Email Id."
+  },
+  "address" : {
+    "message": "Address",
+    "Description": "Address"
+  },
+  "dob" : {
+    "message":"Date of Birth",
+     "Description":"Date of Birth"
+  },
+  "email_required" : {
+    "message":"Email address is required.",
+    "Description": "Email address required message."
+
+  },
+  "valid_email_message":{
+    "message":"Enter a valid email in the 'joe@abc.com' format.",
+    "Description":"validation message for email"
+  },
+
+  "phone_number_validation":{
+    "message":"Enter a phone number matching the format for the selected country.",
+    "Description":"phone number validation message."
+  },
+  "submit":{
+    "message":"Submit",
+    "Description":"submit button text."
+
+  }
+}

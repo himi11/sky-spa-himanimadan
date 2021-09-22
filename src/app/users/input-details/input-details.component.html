@@ -1,0 +1,63 @@
+
+<ng-container *ngIf="userForm">
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" >
+<div class="sky-form-group"  style="max-width: 50%" >
+  <label for="form-group-first-input-example" class="sky-control-label">
+    {{'first_name' | skyAppResources}}
+  </label>
+  <input class="sky-form-control" id="form-group-first-input" type="text" formControlName= 'firstName'>
+</div>
+<div class="sky-form-group"  style="max-width: 50%" >
+  <label for="form-group-second-input" class="sky-control-label">
+    {{'last_name' | skyAppResources}}
+  </label>
+  <input class="sky-form-control" id="form-group-second-input" type="text" formControlName= 'lastName'>
+</div>
+<div class="sky-form-group"  style="max-width: 50%" >
+  <label for="form-group-third-input" class="sky-control-label">
+    {{'email_id'| skyAppResources}}
+  </label>
+  <input class="sky-form-control" id="form-group-third-input" type="text" formControlName= 'emailId'>
+  <ng-container *ngIf="emailControl.errors && emailControl.touched">
+
+    <div *ngIf="emailControl.errors.required" class="sky-error-label">
+      {{'email_required' | skyAppResources}}
+    </div>
+
+    <div *ngIf="emailControl.errors.skyEmail && emailControl.dirty" class="sky-error-label">
+      {{'valid_email_message | skyAppResources'}}
+    </div>
+
+  </ng-container>
+</div>
+
+<div class="sky-form-group"  style="max-width: 50%" >
+  <label for="form-group-fourth-input" class="sky-control-label">
+    {{'address'| skyAppResources}}
+  </label>
+  <input class="sky-form-control" id="form-group-fourth-input" type="text" formControlName= 'address'>
+</div>
+
+<div class="sky-form-group"  style="max-width: 50%" >
+  <label for="form-group-fourth-input" class="sky-control-label">
+    {{'phone_number' | skyAppResources}}
+  </label>
+  <sky-phone-field [defaultCountry]="'us'">
+  <input class="sky-form-control" skyPhoneFieldInput id="form-group-fourth-input"  formControlName= 'phoneNumber'>
+  </sky-phone-field>
+  <sky-status-indicator *ngIf="!phoneControl.valid" descriptionType="none" indicatorType="danger">
+   {{'phone_number_validation' | skyAppResources}}
+  </sky-status-indicator>
+</div>
+<div class="sky-form-group"  style="max-width: 50%" >
+  <label for="form-group-fifth-input" class="sky-control-label">
+    {{'dob' | skyAppResources}}
+  </label>
+  <sky-datepicker>
+  <input class="sky-form-control" skyDatepickerInput id="form-group-fifth-input" type="text" formControlName= 'dateOfBirth'>
+</sky-datepicker>
+</div>
+
+<button class="sky-btn sky-btn-primary" type ="submit">{{submit | skyAppResources }}</button>
+</form>
+</ng-container>
