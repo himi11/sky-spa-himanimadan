@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserDetailsModel } from '../user-details.model';
-import { UserDataService } from '../shared/user-data.service';
-import { GridApi, GridReadyEvent, GridOptions } from 'ag-grid-community';
-
-import { SkyCellType, SkyAgGridService } from '@skyux/ag-grid';
+import { SkyAgGridService, SkyCellType } from '@skyux/ag-grid';
+import { GridApi, GridOptions, GridReadyEvent } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
+import { UserDataService } from '../shared/user-data.service';
+import { UserDetailsModel } from '../user-details.model';
 
 @Component({
   selector: 'app-users-grid',
@@ -81,5 +80,4 @@ export class UsersGridComponent implements OnInit, OnDestroy {
     this.gridApi = gridReadyEvent.api;
     this.gridApi.sizeColumnsToFit();
   }
-
 }

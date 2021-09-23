@@ -1,17 +1,17 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
   Validators
-} from "@angular/forms";
-import { SkyValidators } from "@skyux/validation";
-import { UserDataService } from "../shared/user-data.service";
+} from '@angular/forms';
+import { SkyValidators } from '@skyux/validation';
+import { UserDataService } from '../shared/user-data.service';
 
 @Component({
-  selector: "app-input-details",
-  templateUrl: "./input-details.component.html",
+  selector: 'app-input-details',
+  templateUrl: './input-details.component.html'
 })
 export class InputDetailsComponent implements OnInit {
   public userForm: FormGroup;
@@ -31,10 +31,10 @@ export class InputDetailsComponent implements OnInit {
   }
 
   public get emailControl(): AbstractControl {
-    return this.userForm.get("emailId");
+    return this.userForm.get('emailId');
   }
   public get phoneControl(): AbstractControl {
-    return this.userForm.get("phoneNumber");
+    return this.userForm.get('phoneNumber');
   }
 
   private initUserForm() {
@@ -44,10 +44,10 @@ export class InputDetailsComponent implements OnInit {
       dateOfBirth: new FormControl(),
       emailId: new FormControl(undefined, [
         Validators.required,
-        SkyValidators.email,
+        SkyValidators.email
       ]),
       phoneNumber: new FormControl(undefined),
-      address: new FormControl(),
+      address: new FormControl()
     });
   }
 }
