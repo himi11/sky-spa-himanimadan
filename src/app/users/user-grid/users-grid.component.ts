@@ -1,41 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserDetailsModel } from '../user-details.model';
 import { UserDataService } from '../shared/user-data.service';
-import {
-  GridApi,
-  GridReadyEvent,
-  GridOptions,
-} from 'ag-grid-community';
+import { GridApi, GridReadyEvent, GridOptions } from 'ag-grid-community';
 
-import {
-  SkyCellType,
-  SkyAgGridService
-} from '@skyux/ag-grid';
+import { SkyCellType, SkyAgGridService } from '@skyux/ag-grid';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-users-grid',
   templateUrl: './users-grid.component.html'
 })
-export class UsersGridComponent {
-
-  protected gridData: UserDetailsModel[] = [];
-  protected gridOptions: GridOptions;
+export class UsersGridComponent implements OnInit, OnDestroy {
+  public gridData: UserDetailsModel[] = [];
+  public gridOptions: GridOptions;
   protected gridApi: GridApi;
-  subscription: Subscription;
+  protected subscription: Subscription;
 
   private columnDefs = [
     {
       field: 'firstName',
       headerName: 'First Name',
-      type: SkyCellType.Text,
-
+      type: SkyCellType.Text
     },
     {
       field: 'lastName',
       headerName: 'Last Name',
-      type: SkyCellType.Text,
-
+      type: SkyCellType.Text
     },
     {
       field: 'dateOfBirth',
@@ -60,30 +50,36 @@ export class UsersGridComponent {
     }
   ];
 
-
-  constructor(private agGridService: SkyAgGridService, private userDataService: UserDataService) {
-    this.subscription = this.userDataService.currentUsersList.subscribe((data: UserDetailsModel[]) =>{
-      this.gridData = data.slice();
-    })
+  constructor(
+    private agGridService: SkyAgGridService,
+    private userDataService: UserDataService
+  ) {
+    this.subscription = this.userDataService.currentUsersList.subscribe(
+      (data: UserDetailsModel[]) => {
+        this.gridData = data.slice();
+      }
+    );
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.gridData = this.userDataService.getUsersList();
     this.gridOptions = {
       columnDefs: this.columnDefs,
-      onGridReady: (gridReadyEvent: GridReadyEvent) => this.onGridReady(gridReadyEvent)
+      onGridReady: (gridReadyEvent: GridReadyEvent) =>
+        this.onGridReady(gridReadyEvent)
     };
-    this.gridOptions = this.agGridService.getGridOptions({ gridOptions: this.gridOptions });
-
+    this.gridOptions = this.agGridService.getGridOptions({
+      gridOptions: this.gridOptions
+    });
   }
 
-  public onGridReady(gridReadyEvent: GridReadyEvent): void {
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  protected onGridReady(gridReadyEvent: GridReadyEvent): void {
     this.gridApi = gridReadyEvent.api;
     this.gridApi.sizeColumnsToFit();
-  }
-
-  ngOnDestroy(): void{
-    this.subscription.unsubscribe();
   }
 
 }

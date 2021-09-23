@@ -1,9 +1,8 @@
-export class UserDetailsModel{
-
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  emailId: string;
-  address: string;
-  dateOfBirth: string;
+export class UserDetailsModel {
+  public firstName: string;
+  public lastName: string;
+  public phoneNumber: string;
+  public emailId: string;
+  public address: string;
+  public dateOfBirth: string;
 }

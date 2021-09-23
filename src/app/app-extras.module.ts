@@ -9,19 +9,16 @@ import {
 } from './app-sky.module';
 import {
   AgGridModule
-} from "ag-grid-angular/";
-
-
+} from 'ag-grid-angular';
 
 @NgModule({
   exports: [
     AppSkyModule,
     AgGridModule
   ],
-  imports:[
+  imports: [
     ReactiveFormsModule,
     AgGridModule.withComponents([])
-  ],
-  entryComponents: []
+  ]
 })
 export class AppExtrasModule { }

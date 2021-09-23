@@ -5,18 +5,18 @@ import { UserDetailsModel } from '../user-details.model';
 import { DataConstants } from './data-constants';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class UserDataService {
   public usersList: UserDetailsModel[];
   private data = new Subject();
   public currentUsersList = this.data.asObservable();
 
-  constructor(){
+  constructor() {
     this.usersList = [];
-    DataConstants.Users.forEach((user) => {
+    DataConstants.users.forEach((user) => {
       this.usersList.push(JSON.parse(user));
-     })
+    });
   }
 
   public addUser(user: FormGroup) {
@@ -27,5 +27,4 @@ export class UserDataService {
   public getUsersList() {
     return this.usersList;
   }
-
 }

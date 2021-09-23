@@ -35,8 +35,6 @@ import {
   SkyAgGridModule
 } from '@skyux/ag-grid';
 
-
-
 @NgModule({
   exports: [
     SkyAvatarModule,
