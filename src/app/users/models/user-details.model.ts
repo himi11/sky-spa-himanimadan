@@ -4,5 +4,5 @@ export class UserDetailsModel {
   public phoneNumber: string;
   public emailId: string;
   public address: string;
-  public dateOfBirth: string;
+  public dateOfBirth: Date;
 }

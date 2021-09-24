@@ -15,6 +15,8 @@ import { UserDataService } from '../shared/user-data.service';
 })
 export class InputDetailsComponent implements OnInit {
   public userForm: FormGroup;
+  public showSubmitErrorMessage: boolean;
+  public maxDateInDob: Date;
 
   constructor(
     private formbuilder: FormBuilder,
@@ -22,12 +24,9 @@ export class InputDetailsComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    this.maxDateInDob = new Date(new Date().getDate() + 1);
+    this.showSubmitErrorMessage = false;
     this.initUserForm();
-  }
-
-  public onSubmit() {
-    this.userDataService.addUser(this.userForm);
-    this.userForm.reset();
   }
 
   public get emailControl(): AbstractControl {
@@ -37,17 +36,27 @@ export class InputDetailsComponent implements OnInit {
     return this.userForm.get('phoneNumber');
   }
 
-  private initUserForm() {
+  public onSubmit(): void {
+    if (this.userForm.valid) {
+      this.userDataService.addUser(this.userForm);
+      this.userForm.reset();
+      this.showSubmitErrorMessage = false;
+    } else {
+      this.showSubmitErrorMessage = true;
+    }
+  }
+
+  private initUserForm(): void {
     this.userForm = this.formbuilder.group({
       firstName: new FormControl(undefined, Validators.required),
       lastName: new FormControl(undefined, Validators.required),
-      dateOfBirth: new FormControl(),
+      dateOfBirth: new FormControl(undefined),
       emailId: new FormControl(undefined, [
         Validators.required,
         SkyValidators.email
       ]),
       phoneNumber: new FormControl(undefined),
-      address: new FormControl()
+      address: new FormControl(undefined)
     });
   }
 }

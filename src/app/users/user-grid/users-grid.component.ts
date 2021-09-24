@@ -1,9 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SkyAgGridService, SkyCellType } from '@skyux/ag-grid';
+import { SkyModalCloseArgs, SkyModalService } from '@skyux/modals';
 import { GridApi, GridOptions, GridReadyEvent } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
+import { UserDetailsModel } from '../models/user-details.model';
+import { UserGridModel } from '../models/user-grid.model';
 import { UserDataService } from '../shared/user-data.service';
-import { UserDetailsModel } from '../user-details.model';
+import { UserGridEditModelComponent } from './user-grid-edit-modal.component';
+import { UserGridMenuComponent } from './user-grid-menu.component';
 
 @Component({
   selector: 'app-users-grid',
@@ -12,10 +16,21 @@ import { UserDetailsModel } from '../user-details.model';
 export class UsersGridComponent implements OnInit, OnDestroy {
   public gridData: UserDetailsModel[] = [];
   public gridOptions: GridOptions;
+  public searchText: string;
   protected gridApi: GridApi;
   protected subscription: Subscription;
-
   private columnDefs = [
+    {
+      field: 'selected',
+      type: SkyCellType.RowSelector
+    },
+    {
+      colId: 'context',
+      headerName: '',
+      maxWidth: 50,
+      sortable: false,
+      cellRendererFramework: UserGridMenuComponent
+    },
     {
       field: 'firstName',
       headerName: 'First Name',
@@ -51,11 +66,14 @@ export class UsersGridComponent implements OnInit, OnDestroy {
 
   constructor(
     private agGridService: SkyAgGridService,
-    private userDataService: UserDataService
+    private userDataService: UserDataService,
+    private modalService: SkyModalService
   ) {
     this.subscription = this.userDataService.currentUsersList.subscribe(
-      (data: UserDetailsModel[]) => {
-        this.gridData = data.slice();
+      (userList: UserDetailsModel[]) => {
+        if (userList) {
+          this.gridData = userList.slice();
+        }
       }
     );
   }
@@ -74,6 +92,37 @@ export class UsersGridComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  public openModal(): void {
+    const context = new UserGridModel();
+    context.gridData = this.gridData;
+
+    const options = {
+      providers: [{ provide: UserGridModel, useValue: context }],
+      ariaDescribedBy: 'docs-edit-grid-modal-content',
+      size: 'large'
+    };
+
+    const modalInstance = this.modalService.open(
+      UserGridEditModelComponent,
+      options
+    );
+
+    modalInstance.closed.subscribe((result: SkyModalCloseArgs) => {
+      if (result.reason === 'cancel' || result.reason === 'close') {
+        alert('Edits canceled!');
+      } else {
+        this.gridData = result.data;
+        this.gridApi.refreshCells();
+        alert('Saving data!');
+      }
+    });
+  }
+
+  public searchApplied(searchText: string): void {
+    this.searchText = searchText;
+    this.gridApi.setQuickFilter(searchText);
   }
 
   protected onGridReady(gridReadyEvent: GridReadyEvent): void {
