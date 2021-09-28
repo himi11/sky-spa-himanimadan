@@ -14,7 +14,7 @@ import { UserGridModel } from '../models/user-grid.model';
   selector: 'user-grid-edit-modal',
   templateUrl: './user-grid-edit-modal.component.html'
 })
-export class UserGridEditModelComponent implements OnInit {
+export class UserGridEditModalComponent implements OnInit {
   public columnDefs: ColDef[];
   public gridApi: GridApi;
   public gridData: UserDetailsModel[];
@@ -74,7 +74,7 @@ export class UserGridEditModelComponent implements OnInit {
     });
   }
 
-  public onGridReady(gridReadyEvent: GridReadyEvent): void {
+  protected onGridReady(gridReadyEvent: GridReadyEvent): void {
     this.gridApi = gridReadyEvent.api;
     this.gridApi.sizeColumnsToFit();
   }

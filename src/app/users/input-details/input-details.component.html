@@ -1,5 +1,5 @@
 <ng-container *ngIf="userForm">
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <form id="userForm" [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <div class="sky-form-group" style="max-width: 50%">
       <label for="form-group-first-input-example" class="sky-control-label">
         {{ 'first_name' | skyAppResources }}

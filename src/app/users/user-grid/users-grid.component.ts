@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { UserDetailsModel } from '../models/user-details.model';
 import { UserGridModel } from '../models/user-grid.model';
 import { UserDataService } from '../shared/user-data.service';
-import { UserGridEditModelComponent } from './user-grid-edit-modal.component';
+import { UserGridEditModalComponent } from './user-grid-edit-modal.component';
 import { UserGridMenuComponent } from './user-grid-menu.component';
 
 @Component({
@@ -17,8 +17,9 @@ export class UsersGridComponent implements OnInit, OnDestroy {
   public gridData: UserDetailsModel[] = [];
   public gridOptions: GridOptions;
   public searchText: string;
-  protected gridApi: GridApi;
-  protected subscription: Subscription;
+  public subscription: Subscription;
+  public gridApi: GridApi;
+
   private columnDefs = [
     {
       field: 'selected',
@@ -105,7 +106,7 @@ export class UsersGridComponent implements OnInit, OnDestroy {
     };
 
     const modalInstance = this.modalService.open(
-      UserGridEditModelComponent,
+      UserGridEditModalComponent,
       options
     );
 

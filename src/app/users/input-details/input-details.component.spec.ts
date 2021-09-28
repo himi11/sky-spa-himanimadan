@@ -1,12 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { SkyAppTestModule } from '@skyux-sdk/builder/runtime/testing/browser';
-import { SkyPagesModule } from '@skyux-sdk/builder/src/app/sky-pages.module';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick
+} from '@angular/core/testing';
+import { FormControl, FormGroup } from '@angular/forms';
+import { SkyAppTestModule } from '@skyux-sdk/builder/runtime/testing/browser/test-module';
 import { expect } from '@skyux-sdk/testing';
-import { UserDetailsModel } from '../models/user-details.model';
 import { UserDataService } from '../shared/user-data.service';
 import { InputDetailsComponent } from './input-details.component';
-
 
 describe('Input Details component', () => {
   let userDataService: UserDataService;
@@ -14,16 +16,12 @@ describe('Input Details component', () => {
   let fixture: ComponentFixture<InputDetailsComponent>;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SkyAppTestModule,SkyPagesModule,ReactiveFormsModule],
-      declarations: [InputDetailsComponent],
-      providers: [userDataService]
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(InputDetailsComponent);
-        component = fixture.componentInstance;
-        userDataService = TestBed.inject(UserDataService);
-      });
+      imports: [SkyAppTestModule]
+    });
+    fixture = TestBed.createComponent(InputDetailsComponent);
+    component = fixture.componentInstance;
+    userDataService = TestBed.inject(UserDataService);
+    fixture.detectChanges();
   });
 
   afterEach(() => {
@@ -32,43 +30,65 @@ describe('Input Details component', () => {
   });
 
   it('should create the component', () => {
-    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
   it('check form group elements', () => {
     const formElement =
-      fixture.debugElement.nativeElement.querySelector('form');
+      fixture.debugElement.nativeElement.querySelector('#userForm');
     const inputElements = formElement.querySelectorAll('input');
-    expect(inputElements).toBe(5);
+    expect(inputElements.length).toBe(6);
   });
 
-  it('check form first name input', () => {
+  it('check form first name input', fakeAsync(() => {
     const formElement =
-      fixture.debugElement.nativeElement.querySelector('form');
+      fixture.debugElement.nativeElement.querySelector('#userForm');
     const inputElement = formElement.querySelectorAll('input')[0];
     inputElement.value = 'qwert';
     inputElement.dispatchEvent(new Event('input'));
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      const firstNameFromFormGroup = component.userForm.get('firstName');
-      expect(firstNameFromFormGroup.value).toBe(inputElement.value);
-    });
-  });
+    tick();
+    const firstNameFromFormGroup = component.userForm.get('firstName');
+    expect(firstNameFromFormGroup.value).toBe(inputElement.value);
+  }));
 
   it('ngOnInit called', () => {
     component.ngOnInit();
-    const userFormValues = new UserDetailsModel();
-    expect(component.userForm.value).toBe(userFormValues);
+    const userFormValues: FormGroup = new FormGroup({
+      firstName: new FormControl(undefined),
+      lastName: new FormControl(undefined),
+      address: new FormControl(undefined),
+      dateOfBirth: new FormControl(undefined),
+      phoneNumber: new FormControl(undefined),
+      emailId: new FormControl(undefined)
+    });
+    expect(component.userForm.value).toEqual(userFormValues.value);
   });
 
-  it('phoneNumber getter called', () => {
+  it('phoneNumber getter called', fakeAsync(() => {
     component.ngOnInit();
-    expect(component.phoneControl.value).toBe(undefined);
-  });
+    component.userForm = new FormGroup({
+      firstName: new FormControl(undefined),
+      lastName: new FormControl(undefined),
+      address: new FormControl(undefined),
+      dateOfBirth: new FormControl(undefined),
+      phoneNumber: new FormControl('78787878'),
+      emailId: new FormControl('abcwe@gh.com')
+    });
+    expect(component.phoneControl.value).toBe('78787878');
+  }));
+
   it('email getter called', () => {
     component.ngOnInit();
-    expect(component.emailControl.value).toBe(undefined);
+    component.userForm = new FormGroup({
+      firstName: new FormControl(undefined),
+      lastName: new FormControl(undefined),
+      address: new FormControl(undefined),
+      dateOfBirth: new FormControl(undefined),
+      phoneNumber: new FormControl(undefined),
+      emailId: new FormControl('abcwe@gh.com')
+    });
+    expect(component.emailControl.value).toBe('abcwe@gh.com');
   });
 
   it('onSubmit called without filling the form', () => {
@@ -76,15 +96,20 @@ describe('Input Details component', () => {
     component.onSubmit();
     expect(component.userForm.valid).toBe(false);
     expect(component.showSubmitErrorMessage).toBe(true);
-    expect(component.userForm.reset).toHaveBeenCalledTimes(0);
   });
 
-  it('onSubmit called with valid form', () => {
-    component.ngOnInit();
+  it('onSubmit called with valid form', fakeAsync(() => {
+    component.userForm = new FormGroup({
+      firstName: new FormControl('afga'),
+      lastName: new FormControl('ahjahj'),
+      address: new FormControl(undefined),
+      dateOfBirth: new FormControl(undefined),
+      phoneNumber: new FormControl('78787878'),
+      emailId: new FormControl('abcwe@gh.com')
+    });
     const addUserSpy = spyOn(userDataService, 'addUser');
     component.onSubmit();
     expect(addUserSpy).toHaveBeenCalled();
     expect(component.userForm.valid).toBeTrue();
-    expect(component.userForm.reset).toHaveBeenCalled();
-  });
+  }));
 });
