@@ -1,0 +1,94 @@
+{
+  "example_string": {
+    "message": "This is an example string",
+    "_description": "The _description property gives context to the translator as to how the string is used in the product"
+  },
+  "address" : {
+    "message": "Address",
+    "_description": "Address"
+  },
+  "app_nav_about": {
+    "message": "About",
+    "_description": "The text for the About top-level navigation item"
+  },
+  "app_nav_home": {
+    "message": "Home",
+    "_description": "The text for the Home top-level navigation item"
+  },
+  "app_nav_users": {
+    "message": "Users",
+    "_description": "Add a user in the grid."
+  },
+  "cancel" :{
+    "message":"Cancel",
+    "_description": "Cancel option."
+  },
+  "delete":{
+    "message":"Delete",
+    "_description":"Delete option."
+  },
+  "dob" : {
+    "message":"Date of Birth",
+     "_description":"Date of Birth"
+  },
+  "edit": {
+    "message":"Edit",
+    "_description": "edit option"
+  },
+  "edit_employee_info": {
+    "message":"Edit Employee information",
+    "_description":"edit employee modal title."
+  },
+  "email_id": {
+    "message": "Email Id",
+    "_description": "Email Id."
+  },
+  "email_required" : {
+    "message":"Email address is required.",
+    "_description": "Email address required message."
+  },
+  "first_name": {
+    "message": "First Name",
+    "_description": "First Name."
+  },
+  "home_title": {
+    "message": "SKY UX Template",
+    "_description": "Title for the home component"
+  },
+  "mark_inactive": {
+    "message": "Mark Inactive",
+    "_description": "Mark Inactive option."
+  },
+  "more_info": {
+    "message": "More Info",
+    "_description": "More Info option."
+  },
+  "last_name": {
+    "message": "Last Name",
+    "_description": "Last Name."
+  },
+  "phone_number": {
+    "message": "Phone Number",
+    "_description": "Phone Number."
+  },
+  "phone_number_validation":{
+    "message":"Enter a phone number matching the format for the selected country.",
+    "_description":"phone number validation message."
+  },
+  "save":{
+    "message":"Save",
+    "_description": "Save button."
+  },
+  "submit":{
+    "message":"Submit",
+    "_description":"submit button text."
+  },
+  "submit_error_message":{
+    "message":"Please fill the above details to submit.",
+    "_description":"validation error message on submit"
+  },
+  "valid_email_message":{
+    "message":"Enter a valid email in the 'joe@abc.com' format.",
+    "_description":"validation message for email"
+  }
+}
